@@ -64,11 +64,23 @@ public class JuegoCazaFrutas extends JPanel implements ActionListener, KeyListen
     }
 
     private void cargarImagenes() {
-        imagenJugador = new ImageIcon("src/imagenes/jugador.png").getImage();
-        imagenManzana = new ImageIcon("src/imagenes/manzana.png").getImage();
-        imagenPinya   = new ImageIcon("src/imagenes/pinya.png").getImage();
-        imagenRoca    = new ImageIcon("src/imagenes/roca.png").getImage();
-        imagenCorazon = new ImageIcon("src/imagenes/corazon.png").getImage();
+        try {
+            imagenJugador = cargarRecurso("/imagenes/jugador.png");
+            imagenManzana = cargarRecurso("/imagenes/manzana.png");
+            imagenPinya   = cargarRecurso("/imagenes/pinya.png");
+            imagenRoca    = cargarRecurso("/imagenes/roca.png");
+            imagenCorazon = cargarRecurso("/imagenes/corazon.png");
+        } catch (Exception e) {
+            System.err.println("Error crítico: No se pudieron cargar las imágenes.");
+        }
+    }
+    private Image cargarRecurso(String ruta) {
+        java.net.URL url = getClass().getResource(ruta);
+        if (url == null) {
+            System.err.println("No se encontró el archivo en: " + ruta);
+            return null;
+        }
+        return new ImageIcon(url).getImage();
     }
 
 
