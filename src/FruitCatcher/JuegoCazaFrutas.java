@@ -18,7 +18,7 @@ public class JuegoCazaFrutas extends JPanel implements ActionListener, KeyListen
     enum TipoObjeto { MANZANA, PINYA, ROCA }
     private static final int MAX_OBJETOS = 6;
     private int[]     objetoX      = new int[MAX_OBJETOS];
-    private int[]     objetoY      = new int[MAX_OBJETOS];
+    private int[]     posicionVertical      = new int[MAX_OBJETOS];
     private TipoObjeto[] objetoTipo = new TipoObjeto[MAX_OBJETOS];
     private boolean[] objetoActivo = new boolean[MAX_OBJETOS];
     private int[]     objetoVelocidad    = new int[MAX_OBJETOS];
@@ -127,12 +127,12 @@ public class JuegoCazaFrutas extends JPanel implements ActionListener, KeyListen
 
     private void moverObjetos() {
         for (int i = 0; i < MAX_OBJETOS; i++) {
-            if (!objetoActivo[i]) continue;
+            if (!objetoActivo[i]);
 
-            objetoY[i] += objetoVelocidad[i];
+            posicionVertical[i] += objetoVelocidad[i];
 
 
-            if (objetoY[i] > ALTO) {
+            if (posicionVertical[i] > ALTO) {
                 objetoActivo[i] = false;
                 lanzarObjeto(i);
             }
@@ -144,9 +144,9 @@ public class JuegoCazaFrutas extends JPanel implements ActionListener, KeyListen
         Rectangle rectanguloJugador = new Rectangle(jugadorX, JUGADOR_Y, JUGADOR_ANCHO, JUGADOR_ALT);
 
         for (int i = 0; i < MAX_OBJETOS; i++) {
-            if (!objetoActivo[i]) continue;
+            if (!objetoActivo[i]);
 
-            Rectangle rectanguloObjeto = new Rectangle(objetoX[i], objetoY[i], 50, 50);
+            Rectangle rectanguloObjeto = new Rectangle(objetoX[i], posicionVertical[i], 50, 50);
 
 
             if (rectanguloJugador.intersects(rectanguloObjeto)) {
@@ -173,7 +173,7 @@ public class JuegoCazaFrutas extends JPanel implements ActionListener, KeyListen
 
     private void lanzarObjeto(int i) {
         objetoX[i]   = aleatorio.nextInt(ANCHO - 50);
-        objetoY[i]   = -50 - aleatorio.nextInt(200);
+        posicionVertical[i]   = -50 - aleatorio.nextInt(200);
         objetoVelocidad[i] = velocidadBase + aleatorio.nextInt(3);
 
 
@@ -254,10 +254,9 @@ public class JuegoCazaFrutas extends JPanel implements ActionListener, KeyListen
         dibujarImagen(g, imagenJugador, jugadorX, JUGADOR_Y, JUGADOR_ANCHO, JUGADOR_ALT, new Color(100, 160, 255));
 
         for (int i = 0; i < MAX_OBJETOS; i++) {
-            if (!objetoActivo[i]) continue;
-            if (objetoTipo[i] == TipoObjeto.MANZANA) dibujarImagen(g, imagenManzana, objetoX[i], objetoY[i], 50, 50, new Color(220, 50, 50));
-            if (objetoTipo[i] == TipoObjeto.PINYA) dibujarImagen(g, imagenPinya,   objetoX[i], objetoY[i], 50, 50, new Color(230, 180, 20));
-            if (objetoTipo[i] == TipoObjeto.ROCA) dibujarImagen(g, imagenRoca,    objetoX[i], objetoY[i], 50, 50, new Color(120, 110, 100));
+            if (objetoTipo[i] == TipoObjeto.MANZANA) dibujarImagen(g, imagenManzana, objetoX[i], posicionVertical[i], 50, 50, new Color(220, 50, 50));
+            if (objetoTipo[i] == TipoObjeto.PINYA) dibujarImagen(g, imagenPinya,   objetoX[i], posicionVertical[i], 50, 50, new Color(230, 180, 20));
+            if (objetoTipo[i] == TipoObjeto.ROCA) dibujarImagen(g, imagenRoca,    objetoX[i], posicionVertical[i], 50, 50, new Color(120, 110, 100));
         }
 
         g.setColor(new Color(0, 0, 0, 160));
